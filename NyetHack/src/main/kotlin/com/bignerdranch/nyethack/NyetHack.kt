@@ -1,6 +1,6 @@
 package org.example.com.bignerdranch.nyethack
 
-val player = Player("Jason", "Jacksonville", 100, false)
+val player = Player("Estragon")
 
 fun main() {
 //    changeNarrationMood()

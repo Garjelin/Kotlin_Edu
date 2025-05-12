@@ -2,18 +2,15 @@ package org.example.com.bignerdranch.nyethack
 
 class Player(
     initialName: String,
-    hometown: String,
-    healthPoints: Int,
-    isImmortal: Boolean
+    val hometown: String = "Neversummer",
+    var healthPoints: Int,
+    val isImmortal: Boolean
 ) {
     var name = initialName
         get() = field.replaceFirstChar { it.uppercase() }
         private set(value) {
             field = value.trim()
         }
-    val hometown = hometown
-    var healthPoints = healthPoints
-    val isImmortal = isImmortal
 
     val title: String
         get() = when {
@@ -22,6 +19,15 @@ class Player(
             name.count { it.lowercase() in "aeiou" } > 4 -> "The Master of Vowels"
             else -> "The Renowned Hero"
         }
+    constructor(name: String) : this(
+        initialName = name,
+        healthPoints = 100,
+        isImmortal = false
+    ) {
+        if (name.equals("Jason", ignoreCase = true)) {
+            healthPoints = 500
+        }
+    }
 
     fun castFireball(numFireballs: Int = 2) {
         narrate("A glass of Fireball springs into existence (x$numFireballs)")
