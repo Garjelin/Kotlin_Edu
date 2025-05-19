@@ -7,12 +7,7 @@ fun main() {
     val playerName = promptHeroName()
     player = Player(playerName)
 //    changeNarrationMood()
-    player.prophesize()
-    val mortality = if (player.isImmortal) "an immortal" else "a mortal"
-    narrate("${player.name} of ${player.hometown}, ${player.title}, heads to the town square")
-    visitTavern()
-    player.castFireball()
-    player.prophesize()
+    Game.play()
 }
 
 private fun makeYellow(message: String): String = "\u001b[33;1m$message\u001b[0m"
@@ -26,4 +21,22 @@ private fun promptHeroName(): String {
 //    return input
     println("Madrigal")
     return "Madrigal"
+}
+
+object Game {
+    private var currentRoom: Room = Tavern()
+    init {
+        narrate("Welcome, adventurer")
+        val mortality = if (player.isImmortal) "an immortal" else "a mortal"
+        narrate("${player.name}, $mortality, has ${player.healthPoints} health points")
+    }
+
+    fun play() {
+        while (true) {
+            narrate("${player.name} of ${player.hometown}, ${player.title}, is in ${currentRoom.description()}")
+            currentRoom.enterRoom()
+            print("> Enter your command: ")
+            println("Last command: ${readLine()}")
+        }
+    }
 }
