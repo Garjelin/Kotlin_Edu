@@ -1,5 +1,7 @@
 package org.example.com.bignerdranch.nyethack
 
+import com.bignerdranch.nyethack.Coordinate
+
 lateinit var player: Player
 
 fun main() {
@@ -24,7 +26,8 @@ private fun promptHeroName(): String {
 }
 
 object Game {
-    private var currentRoom: Room = Tavern()
+    private var currentRoom: Room = TownSquare()
+    private var currentPosition = Coordinate(0, 0)
     init {
         narrate("Welcome, adventurer")
         val mortality = if (player.isImmortal) "an immortal" else "a mortal"
@@ -36,7 +39,17 @@ object Game {
             narrate("${player.name} of ${player.hometown}, ${player.title}, is in ${currentRoom.description()}")
             currentRoom.enterRoom()
             print("> Enter your command: ")
-            println("Last command: ${readLine()}")
+            GameInput(readLine()).processCommand()
+        }
+    }
+
+    private class GameInput(arg: String?) {
+        private val input = arg ?: ""
+        val command = input.split(" ")[0]
+        val argument = input.split(" ").getOrElse(1) { "" }
+
+        fun processCommand() = when (command.lowercase()) {
+            else -> narrate("I'm not sure what you're trying to do")
         }
     }
 }
