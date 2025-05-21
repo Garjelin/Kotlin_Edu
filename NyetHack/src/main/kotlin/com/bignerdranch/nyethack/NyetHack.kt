@@ -1,6 +1,7 @@
 package org.example.com.bignerdranch.nyethack
 
 import com.bignerdranch.nyethack.Coordinate
+import com.bignerdranch.nyethack.Direction
 
 lateinit var player: Player
 
@@ -26,7 +27,12 @@ private fun promptHeroName(): String {
 }
 
 object Game {
-    private var currentRoom: Room = TownSquare()
+    private val worldMap = listOf(
+        listOf(TownSquare(), Tavern(), Room("Back Room")),
+        listOf(Room("A Long Corridor"), Room("A Generic Room")),
+        listOf(Room("The Dungeon"))
+    )
+    private var currentRoom: Room = worldMap[0][0]
     private var currentPosition = Coordinate(0, 0)
     init {
         narrate("Welcome, adventurer")
@@ -40,6 +46,18 @@ object Game {
             currentRoom.enterRoom()
             print("> Enter your command: ")
             GameInput(readLine()).processCommand()
+        }
+    }
+
+    fun move(direction: Direction) {
+        val newPosition = direction.updateCoordinate(currentPosition)
+        val newRoom = worldMap.getOrNull(newPosition.y)?.getOrNull(newPosition.x)
+        if (newRoom != null) {
+            narrate("The hero moves ${direction.name}")
+            currentPosition = newPosition
+            currentRoom = newRoom
+        } else {
+            narrate("You cannot move ${direction.name}")
         }
     }
 
