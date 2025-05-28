@@ -3,6 +3,7 @@ package org.example.com.bignerdranch.nyethack
 import com.bignerdranch.nyethack.Coordinate
 import com.bignerdranch.nyethack.Direction
 import kotlin.system.exitProcess
+import com.bignerdranch.nyethack.*
 
 lateinit var player: Player
 
@@ -11,6 +12,8 @@ fun main() {
     val playerName = promptHeroName()
     player = Player(playerName)
 //    changeNarrationMood()
+    val lootBoxOne = LootBox(Fedora("a generic-looking fedora", 15))
+    val lootBoxTwo = LootBox(Gemstones(150))
     Game.play()
 }
 
