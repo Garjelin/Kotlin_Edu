@@ -14,6 +14,13 @@ fun main() {
 //    changeNarrationMood()
     val lootBoxOne = LootBox(Fedora("a generic-looking fedora", 15))
     val lootBoxTwo = LootBox(Gemstones(150))
+    repeat(2) {
+        narrate(
+            lootBoxOne.takeLoot()?.let {
+                "The hero retrieves ${it.name} from the box"
+            } ?: "The box is empty"
+        )
+    }
     Game.play()
 }
 
