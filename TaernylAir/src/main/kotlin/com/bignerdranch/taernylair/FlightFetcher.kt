@@ -1,4 +1,4 @@
-package org.example
+package org.example.com.bignerdranch.taernylair
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.request.get
@@ -8,16 +8,6 @@ private const val BASE_URL = "http://kotlin-book.bignerdranch.com/2e"
 private const val FLIGHT_ENDPOINT = "$BASE_URL/flight"
 private const val LOYALTY_ENDPOINT = "$BASE_URL/loyalty"
 
-fun main() {
-    runBlocking {
-        println("Started")
-        launch {
-            val flight = fetchFlight("Madrigal")
-            println(flight)
-        }
-        println("Finished")
-    }
-}
 //fun fetchFlight(): String = URL(FLIGHT_ENDPOINT).readText()
 
 suspend fun fetchFlight(passengerName: String): FlightStatus = coroutineScope {
